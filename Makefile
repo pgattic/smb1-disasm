@@ -1,13 +1,9 @@
 name = mypatch
 
-run: bin
-	fceux
 genie: bin
 	./genie
 bin: asm
 	./asm -q smb.asm smb.nes smb.lst
-	awk "BEGIN{for(c=0;c<(32767 - $$(du -sb smb.nes | cut -f1) );c++) printf \"-\"; printf \"\xea\"}" >> smb.nes
-	cat smb.chr >> smb.nes
 clean:
 	-rm *.nes *.lst
 asm:
@@ -52,4 +48,4 @@ push: builds
 	git commit
 	git push
 
-.PHONY: run clean bin purge diff genie patch install push builds
+.PHONY: clean bin purge diff genie patch install push builds

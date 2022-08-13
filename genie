@@ -1,4 +1,5 @@
 #!/bin/env python3
+import json
 
 def parse_values(code):
     map = {"a":0x0,"p":0x1,"z":0x2,"l":0x3,"g":0x4,"i":0x5,"t":0x6,"y":0x7,"e":0x8,"o":0x9,"x":0xa,"u":0xb,"k":0xc,"s":0xd,"v":0xe,"n":0xf}
@@ -15,12 +16,7 @@ def parse_values(code):
 
     return (address, data)
 
-codes = []
-while True:
-    code = input("Code (leave empty to terminate): ")
-    if code == "":
-        break
-    codes.append(code)
+codes = json.loads(open("ggcodes.json", "r").read()) # You can put Game Genie codes in comma-separated strings inside those brackets in ggcodes.json
 patches = []
 for code in codes:
     patch = parse_values(code)
