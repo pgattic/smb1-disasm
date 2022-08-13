@@ -16,20 +16,26 @@ def parse_values(code):
 
     return (address, data)
 
+print("Checking for Game Genie codes...")
 codes = json.loads(open("ggcodes.json", "r").read()) # You can put Game Genie codes in comma-separated strings inside those brackets in ggcodes.json
-patches = []
-for code in codes:
-    patch = parse_values(code)
-    if patch == None:
-        continue
-    if patch[0] > (32768 + 8192): # Not in code range
-        print("{}: {} isn't in range".format(hex(patch[0] + 0x8000), hex(patch[1])))
-        continue
-    patches.append(patch)
-with open("smb.nes", "rb") as file:
-    buf = bytearray(file.read())
-for patch in patches:
-    buf[patch[0] + 16] = patch[1]
-    print("Patched {}: {}".format(hex(patch[0] + 0x8000), hex(patch[1])))
-with open("smb.nes", "wb") as file:
-    file.write(buf)
+if len(codes) == 0:
+	print("No codes found. Done!")
+else:
+	patches = []
+	print("Found " + str(len(codes)) + " cheat(s)! Patching...")
+	for code in codes:
+		patch = parse_values(code)
+		if patch == None:
+			continue
+		if patch[0] > (32768 + 8192): # Not in code range
+			print("{}: {} isn't in range".format(hex(patch[0] + 0x8000), hex(patch[1])))
+			continue
+		patches.append(patch)
+	with open("smb.nes", "rb") as file:
+		buf = bytearray(file.read())
+	for patch in patches:
+		buf[patch[0] + 16] = patch[1]
+		print("Patched {}: {}".format(hex(patch[0] + 0x8000), hex(patch[1])))
+	with open("smb.nes", "wb") as file:
+		file.write(buf)
+	print("Done!")
