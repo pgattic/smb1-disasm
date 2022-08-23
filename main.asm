@@ -17255,5 +17255,8 @@ BrickShatterEnvData:
 	.dw Start
 	.dw $fff0  ;unused
 
-.include "gfx/gfx.asm"
+
+.incbin "gfx/sprites.chr"
+.incbin "gfx/bg.chr"
+.incbin "gfx/title.rle"
 

@@ -1,24 +1,17 @@
 name := smb1-disasm
 rom-name := smb
 
-.PHONY: all bin clean compare genie pad
-
-all: bin pad compare
-
+genie: pad
+	@./tools/genie.py
+	sha1sum $(rom-name).nes
+pad: bin
+	@./tools/padding.py
 bin: asm
-	@echo Compiling...
 	./asm -q main.asm $(rom-name).nes $(rom-name).lst
-	@echo Compilation successful! filesize: 
-	@stat -L -c %s $(rom-name).nes
-pad:
-	@./tools/padding.py "$(rom-name).nes" 40976 ff
-compare:
-	@echo SHA-1 Checksum: 
-	@sha1sum $(rom-name).nes
-	@sha1sum -c smb.sha1
+	@echo Compilation successful!
 clean:
 	-rm *.nes *.lst asm
-genie:
-	@./tools/genie.py
 asm:
 	gcc asm6/asm6.c -o asm
+
+.PHONY: clean bin genie
