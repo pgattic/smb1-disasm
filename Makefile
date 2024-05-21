@@ -1,17 +1,25 @@
-name := smb1-disasm
-rom-name := smb
+ROM_NAME := smb
+ASM := asm6f/asm6f
 
-genie: pad
-	@./tools/genie.py
-	sha1sum $(rom-name).nes
-pad: bin
-	@./tools/padding.py
-bin: asm
-	./asm -q main.asm $(rom-name).nes $(rom-name).lst
-	@echo Compilation successful!
+ASM_EXISTS := $(wildcard $(ASM))
+
+all: $(ROM_NAME).nes
+
+$(ROM_NAME).nes: asm
+	@echo "Building $(ROM_NAME).nes..."
+	@$(ASM) -q main.asm $@ $(ROM_NAME).lst \
+	&& echo "$(ROM_NAME).nes built successfully!" \
+	&& sha1sum $@
+
 clean:
-	-rm *.nes *.lst asm
-asm:
-	gcc asm6/asm6.c -o asm
+	rm -f $(ROM_NAME).nes $(ROM_NAME).lst
+	make clean -C asm6f
 
-.PHONY: clean bin genie
+# Only build assembler if it doesn't already exist. Use its own makefile.
+asm:
+ifndef ASM_EXISTS
+	make -C asm6f
+endif
+
+.PHONY: all clean asm
+

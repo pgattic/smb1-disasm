@@ -4,14 +4,28 @@ This is an attempt to organize and streamline the disassembly code for Super Mar
 
 It builds the following ROM: 
 
- - Super Mario Bros. (World).nes `sha1: ea343f4e445a9050d4b4fbac2c77d0693b1d0922`
+- smb.nes `sha1: ea343f4e445a9050d4b4fbac2c77d0693b1d0922`
 
-# Setup
+## Progress
 
-## Linux
+So far, the assembly code and data (excluding CHR) is all in one big asm file. I have a few milestones that I am hoping to reach:
 
-Make sure you have the following packages installed (should be readily available on any distro through its package manager): 
+- [ ] Separate assembly files into smaller, more specific pieces
+- [ ] Extract more binary data into separate files (level maps, tile maps, etc.)
 
- - `make`
- - `gcc`
- - `git`
+## Setup
+
+### Linux/Mac/WSL
+
+Make sure you have the following packages installed:
+
+- `make`
+- `gcc`
+- `git`
+
+Clone the repository and build the rom:
+
+- `git clone https://github.com/pgattic/smb1-disasm`
+- `cd smb1-disasm`
+- `make`
+
