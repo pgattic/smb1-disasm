@@ -1,6 +1,3 @@
-MusicHeaderOffsetData = MusicHeaderData - 1
-MHD                   = MusicHeaderData
-
 ;music header offsets
 
 MusicHeaderData:

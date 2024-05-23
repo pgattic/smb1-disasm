@@ -15,9 +15,6 @@ jobs:
       with:
         submodules: true
 
-    - name: Install dependencies
-      run: make
-
     - name: Run check
       run: make check
 
