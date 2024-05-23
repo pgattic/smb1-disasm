@@ -18,6 +18,8 @@ clean:
 	make clean -C $(ASM_DIR)
 
 check: $(ROM_NAME).nes
+	@echo Expected:
+	@cat $(ROM_NAME).sha1
 	@sha1sum -c smb.sha1
 
 # Only build assembler if it doesn't already exist. Use its own makefile.
