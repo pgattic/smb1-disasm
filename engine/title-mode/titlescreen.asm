@@ -115,3 +115,22 @@ GoContinue:
 	stx AreaNumber		;will make no difference
 	stx OffScr_AreaNumber   
 	rts
+
+MushroomIconData:
+	.db $07, $22, $49, $83, $ce, $24, $24, $00
+
+DrawMushroomIcon:
+	ldy #$07		;read eight bytes to be read by transfer routine
+IconDataRead:
+	lda MushroomIconData,y  ;note that the default position is set for a
+	sta VRAM_Buffer1-1,y    ;1-player game
+	dey
+	bpl IconDataRead
+	lda NumberOfPlayers     ;check number of players
+	beq ExitIcon		;if set to 1-player game, we're done
+	lda #$24		;otherwise, load blank tile in 1-player position
+	sta VRAM_Buffer1+3
+	lda #$ce		;then load shroom icon tile in 2-player position
+	sta VRAM_Buffer1+5
+ExitIcon:
+	rts

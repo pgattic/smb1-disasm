@@ -78,4 +78,5 @@ UpdScrollVar:
 	sta VRAM_Buffer2_Offset    ;level graphics buffer at $0341-$035f
 RunParser:
 	jsr AreaParserTaskHandler  ;update the name table with more level graphics
-ExitEng:	rts				;and after all that, we're finally done!
+ExitEng:
+	rts				;and after all that, we're finally done!
